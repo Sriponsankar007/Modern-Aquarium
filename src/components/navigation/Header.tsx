@@ -6,26 +6,21 @@ import {
   ShoppingCart,
   Menu,
   X,
-  ChevronDown,
   Fish,
   Wrench,
   MessageCircle,
   Clock,
   Search,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
   ChevronRight
 } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { SearchBar } from './SearchBar';
+import { NavCarousel } from './NavCarousel';
 
 export const Header: React.FC = () => {
   const { categories, settings, cartCount, setIsCartOpen } = useShop();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
-  const departmentsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const logoTapCountRef = useRef(0);
@@ -61,23 +56,11 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate]);
 
-  // Close dropdowns on route changes
+  // Close mobile menus on route changes
   useEffect(() => {
     setMobileMenuOpen(false);
     setMobileSearchOpen(false);
-    setIsDepartmentsOpen(false);
   }, [location.pathname]);
-
-  // Handle outside click for departments dropdown
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (departmentsRef.current && !departmentsRef.current.contains(e.target as Node)) {
-        setIsDepartmentsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
 
   const chatUrl = generateStoreChatUrl(settings).url || '#';
 
@@ -116,145 +99,13 @@ export const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* ZONE 2: PRIMARY NAVIGATION LINKS (Desktop & Tablet >= 1024px) */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold text-slate-700 dark:text-slate-300 min-w-0">
-            <Link
-              to="/shop"
-              className={`whitespace-nowrap transition-colors py-2 relative hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                isActiveRoute('/shop')
-                  ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                  : ''
-              }`}
-            >
-              Showroom Catalog
-              {isActiveRoute('/shop') && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400 rounded-full" />
-              )}
-            </Link>
-
-            <Link
-              to="/category/freshwater-fish"
-              className={`whitespace-nowrap transition-colors py-2 relative hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                isActiveRoute('/category/freshwater-fish')
-                  ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                  : ''
-              }`}
-            >
-              Freshwater Fish
-              {isActiveRoute('/category/freshwater-fish') && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400 rounded-full" />
-              )}
-            </Link>
-
-            <Link
-              to="/category/koi"
-              className={`whitespace-nowrap transition-colors py-2 relative hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                isActiveRoute('/category/koi')
-                  ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                  : ''
-              }`}
-            >
-              Japanese Koi
-              {isActiveRoute('/category/koi') && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400 rounded-full" />
-              )}
-            </Link>
-
-            <Link
-              to="/category/aquariums-tanks"
-              className={`whitespace-nowrap transition-colors py-2 relative hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                isActiveRoute('/category/aquariums-tanks')
-                  ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                  : ''
-              }`}
-            >
-              Planted Tanks
-              {isActiveRoute('/category/aquariums-tanks') && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400 rounded-full" />
-              )}
-            </Link>
-
-            {/* Curated Departments Mega-Dropdown */}
-            <div ref={departmentsRef} className="relative">
-              <button
-                type="button"
-                onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-                className={`flex items-center gap-1.5 whitespace-nowrap transition-colors py-2 cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                  isDepartmentsOpen || location.pathname.startsWith('/category/')
-                    ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                    : ''
-                }`}
-                aria-expanded={isDepartmentsOpen}
-              >
-                <span>Departments</span>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    isDepartmentsOpen ? 'rotate-180 text-cyan-600 dark:text-cyan-400' : ''
-                  }`}
-                />
-              </button>
-
-              {isDepartmentsOpen && (
-                <div className="absolute top-full -left-20 mt-2 w-[480px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    <span className="uppercase tracking-wider text-[10px]">Showroom Departments</span>
-                    <Link
-                      to="/shop"
-                      onClick={() => setIsDepartmentsOpen(false)}
-                      className="text-cyan-600 dark:text-cyan-400 hover:underline text-[11px] font-medium"
-                    >
-                      View All 17 Departments →
-                    </Link>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-1.5 max-h-[360px] overflow-y-auto pr-1">
-                    {visibleCategories.map((cat) => (
-                      <Link
-                        key={cat.id}
-                        to={`/category/${cat.slug}`}
-                        onClick={() => setIsDepartmentsOpen(false)}
-                        className="flex items-center gap-2.5 p-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-colors group"
-                      >
-                        <img
-                          src={cat.image}
-                          alt={cat.name}
-                          className="w-7 h-7 rounded-lg object-cover bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-800"
-                        />
-                        <span className="truncate flex-1">{cat.name}</span>
-                        {cat.id === 'birds' && (
-                          <span className="text-[9px] text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded font-semibold border border-amber-300 dark:border-amber-800/80 shrink-0">
-                            Pickup
-                          </span>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/services"
-              className={`whitespace-nowrap transition-colors py-2 relative flex items-center gap-1.5 hover:text-cyan-600 dark:hover:text-cyan-400 ${
-                isActiveRoute('/services')
-                  ? 'text-cyan-600 dark:text-cyan-400 font-bold'
-                  : ''
-              }`}
-            >
-              <Wrench className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-              <span>Services</span>
-              {isActiveRoute('/services') && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400 rounded-full" />
-              )}
-            </Link>
-          </nav>
+          {/* ZONE 2: PROMINENT REAL-TIME GLOBAL SEARCH (Desktop & Tablet) */}
+          <div className="hidden md:flex flex-1 max-w-xl mx-3 sm:mx-6 min-w-0">
+            <SearchBar className="w-full" />
+          </div>
 
           {/* ZONE 3: BALANCED ACTION CLUSTER */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Desktop Real-Time Global Search Bar */}
-            <div className="hidden md:block">
-              <SearchBar className="w-48 lg:w-64 xl:w-72" />
-            </div>
 
             {/* Mobile Search Icon Button (Never squishes header layout) */}
             <button
@@ -321,6 +172,9 @@ export const Header: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* SECONDARY NAVIGATION: SMOOTH INTERACTIVE CAROUSEL */}
+      <NavCarousel />
 
       {/* Mobile Slide-Down Search Input */}
       {mobileSearchOpen && (
