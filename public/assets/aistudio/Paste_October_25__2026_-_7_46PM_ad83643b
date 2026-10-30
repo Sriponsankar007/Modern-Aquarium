@@ -1,0 +1,1013 @@
+# MASTER PROJECT PROMPT — MODERN AQUARIUM E-COMMERCE
+
+Act as a senior full-stack developer, UI/UX designer, 3D web developer, e-commerce architect, and QA engineer.
+
+Build a complete, responsive, premium aquarium e-commerce website for a real client named **Modern Aquarium**.
+
+Reference website: https://aquatic-e-commerce-store.vercel.app/
+
+Use the reference only to understand the aquarium retail domain and shopping requirements. Create a distinct, original design with better usability, polished animations, clear navigation, and a complete WhatsApp ordering workflow.
+
+Do not build just a landing-page mockup. Build a functioning, maintainable application with reusable components, structured product data, search, filters, cart management, product details, an admin area, and working order links.
+
+## 1. PRIMARY OBJECTIVES
+
+The website must:
+- Sell ornamental freshwater fish, koi, and optionally marine fish.
+- Sell aquariums, tanks, plants, substrates, decorations, equipment, food, and accessories.
+- Sell ornamental birds and bird-care products.
+- Offer aquarium setup, installation, maintenance, cleaning, aquascaping, and consultation services.
+- Allow customers to order individual products or a complete cart through WhatsApp.
+- Support product variants, quantities, prices, and stock availability.
+- Mark birds as Store Pickup Only.
+- Allow the shop owner to update products and prices through an admin interface.
+- Work on mobile, tablet, laptop, and desktop.
+- Use free and open-source libraries and avoid mandatory paid services.
+
+The primary conversion action is WhatsApp ordering, not online payment.
+
+## 2. TECHNOLOGY STACK
+
+Use:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Three.js
+- React Three Fiber and Drei for selected 3D scenes
+- Framer Motion for interface animations
+- Lucide React for icons
+- React Hook Form and Zod for form validation where useful
+- Zustand or React Context for cart and shared state
+- Local JSON/TypeScript seed data for the initial catalog
+- localStorage for development persistence when a database is not configured
+- An optional Supabase integration for persistent products and inventory, using its free tier where available
+- Vitest and React Testing Library for essential tests
+
+Use stable package versions that are compatible with one another. Avoid paid SDKs, paid UI kits, paid stock-image APIs, paid animation services, and mandatory AI API calls.
+
+Do not use Gemini or another LLM at runtime. All essential store functionality must work without an AI API key.
+
+The app must be exportable as a normal project and runnable locally.
+
+## 3. VISUAL DESIGN AND BRAND IDENTITY
+
+Brand: Modern Aquarium
+
+Creative direction: premium aquatic showroom, immersive underwater atmosphere, modern nature-inspired commerce.
+
+Visual style:
+- Deep ocean blue, midnight navy, teal, aqua, and restrained coral accents.
+- Bright white or soft off-white surfaces for product cards and readable product information.
+- High-quality aquarium photography.
+- Clean typography, generous spacing, subtle borders, elegant shadows, and rounded but not excessively rounded cards.
+- Large immersive hero section with a cinematic aquarium environment.
+- Professional product grids and consistent visual hierarchy.
+- Polished loading states, hover effects, transitions, and empty states.
+
+Avoid:
+- Generic AI-generated dashboard aesthetics.
+- Excessive gradients, neon glows, and glassmorphism everywhere.
+- Oversized text that pushes shopping content below the fold.
+- Fake product ratings, fabricated testimonials, or false stock counts.
+- Emoji used as product photography.
+- Placeholder buttons that do nothing.
+
+Create a reusable design system with CSS variables, spacing, typography, colors, breakpoints, shadows, and motion tokens.
+
+## 4. 3D AQUARIUM EXPERIENCE
+
+Build a visually impressive but performance-conscious 3D experience.
+
+Homepage:
+- Create a 3D aquarium hero using React Three Fiber and Three.js.
+- Include a glass aquarium, animated fish silhouettes or simple fish models, aquatic plants, rocks, sand, bubbles, and subtle underwater light movement.
+- Add gentle camera movement or pointer-based parallax.
+- Animate fish with smooth paths and natural changes in direction.
+- Use realistic transparency and lighting where performance permits.
+- Add a clear hero heading, subtitle, Shop Fish button, Explore Aquariums button, and WhatsApp contact button.
+
+Additional effects:
+- Subtle bubbles and floating particles.
+- Underwater caustic-style lighting where practical.
+- Smooth section reveals and product-card animations.
+- Subtle image zoom on hover.
+- Smooth navigation and cart-drawer transitions.
+- Optional 3D aquarium preview on relevant product pages.
+
+Implementation rules:
+- Keep the main product catalog lightweight.
+- Lazy-load 3D scenes and heavy assets.
+- Provide a static image fallback if WebGL is unavailable.
+- Respect prefers-reduced-motion.
+- Pause expensive animations when appropriate.
+- Use instanced geometry or lightweight models for repeated objects.
+- Do not load hundreds of complex 3D fish models.
+- Ensure the page remains usable on low-end Android devices.
+- Never make 3D rendering a prerequisite for navigation, search, cart, or checkout.
+
+Use original procedural models or properly licensed free assets. Document any third-party asset license.
+
+## 5. MAIN NAVIGATION
+
+Build a responsive header with:
+- Logo and brand name
+- Home
+- Shop
+- Freshwater Fish
+- Koi
+- Marine Fish
+- Birds
+- Aquariums
+- Plants
+- Decorations
+- Fish Food
+- Accessories
+- Services
+- About
+- Contact
+- Search
+- Cart with item count
+- WhatsApp contact button
+
+Use a multi-column mega menu on desktop and an accessible nested drawer on mobile.
+
+Do not display every individual fish variety in the main header. Organize varieties inside category pages and category navigation.
+
+Add breadcrumbs on category, product, and service detail pages.
+
+## 6. COMPLETE PRODUCT TAXONOMY
+
+Treat the following user-provided catalog as the authoritative initial catalog specification.
+
+Create a structured file named catalog-requirements.md containing the full taxonomy supplied with this prompt. If the taxonomy is attached separately, read it before generating the seed data.
+
+Import and organize all the provided categories, subcategories, and varieties. Do not silently omit categories or replace the catalog with only a handful of sample fish.
+
+### A. Freshwater Fish
+
+Include:
+- Betta / Siamese Fighting Fish
+- Guppy
+- Goldfish
+- Molly
+- Platy
+- Swordtail
+- Tetra
+- Rasbora
+- Danio
+- Angelfish
+- Discus
+- Gourami
+- Cichlids
+- Arowana
+- Catfish
+- Pleco
+- Corydoras
+- Loaches
+- Barbs
+- Rainbowfish
+- Livebearers
+- Killifish
+- Betta relatives / Anabantoids
+- Freshwater Sharks
+- Eels / Eel-like Fish
+- Pufferfish
+- Exotic / Specialty Fish
+
+Preserve all varieties supplied for these categories, including the specific Betta morphs, Guppy strains, Goldfish varieties, Koi varieties, Tetra species, Cichlid varieties, Arowana varieties, and all other supplied entries.
+
+Koi must also have its own main shop category, even if its data is linked to a freshwater fish taxonomy internally.
+
+### B. Marine Fish
+
+Support a separately configurable Marine Fish category, including the supplied:
+- Clownfish and its varieties
+- Tangs
+- Angelfish
+- Butterflyfish
+- Damselfish
+- Chromis
+- Gobies
+- Blennies
+- Wrasses
+- Firefish
+- Cardinalfish
+- Lionfish
+- Triggerfish
+- Hawkfish
+- Pufferfish
+- Dragonets
+- Dottybacks
+
+Allow the administrator to disable the marine category if the shop does not currently stock saltwater fish.
+
+### C. Aquariums and Tanks
+
+Include:
+- Standard glass tanks
+- Rimless aquariums
+- Nano tanks
+- Betta tanks
+- Goldfish tanks
+- Planted tanks
+- Custom-size aquariums
+- Bow-front tanks
+- Fish bowls
+- Breeding tanks
+- Quarantine tanks
+- Aquarium stands
+- Aquarium cabinets
+- Tank covers and lids
+
+### D. Live Plants
+
+Include:
+- Anubias
+- Java Fern
+- Java Moss
+- Amazon Sword
+- Vallisneria
+- Cryptocoryne
+- Hornwort
+- Water Sprite
+- Water Wisteria
+- Dwarf Hairgrass
+- Monte Carlo
+- Bucephalandra
+- Floating plants
+- Mosses
+- Carpet plants
+
+### E. Sand, Gravel, and Substrate
+
+Include:
+- White sand
+- Black sand
+- River sand
+- Natural sand
+- Coral sand
+- Aquarium gravel
+- Colored gravel
+- Black gravel
+- River pebbles
+- Decorative stones
+- Lava rock
+- Dragon stone
+- Seiryu stone
+- Aqua soil
+- Plant substrate
+- Shrimp substrate
+
+### F. Aquarium Decorations
+
+Include:
+- Artificial rocks and caves
+- Resin caves
+- Driftwood and artificial driftwood
+- Tree and mountain decorations
+- Shipwrecks
+- Castles, houses, bridges, and ruins
+- Temple decorations
+- Skull and pirate decorations
+- Sunken-city decorations
+- Cartoon decorations
+- Mushroom houses
+- Water-wheel decorations
+- Artificial plants
+- Ceramic caves
+- Breeding caves
+- Shrimp hides
+- Fish shelters
+
+### G. Aquarium Lighting
+
+Include:
+- LED aquarium lights
+- RGB lights
+- Full-spectrum lights
+- Planted-tank lights
+- Clip-on lights
+- Submersible lights
+- Moonlights
+- Light timers
+- LED strips
+- Light brackets
+
+### H. Air and Oxygen Equipment
+
+Include:
+- Air pumps
+- Dual-output air pumps
+- Air stones
+- Air curtains
+- Air tubes
+- Check valves
+- Air regulators
+- Gang valves
+- Bubble ornaments
+- CO2 diffusers
+
+### I. Filters and Filter Media
+
+Include:
+- Internal filters
+- Hang-on-back filters
+- Sponge filters
+- Corner filters
+- Undergravel filters
+- Canister filters
+- Top filters
+- Overhead filters
+- Power filters
+- Filter media
+- Filter sponges
+- Ceramic rings
+- Bio balls
+- Activated carbon
+- Filter wool
+- Filter bags
+
+### J. Water and Temperature Equipment
+
+Include:
+- Aquarium heaters
+- Digital thermometers
+- Glass thermometers
+- Temperature controllers
+- Water testing kits
+- pH test kits
+- Ammonia test kits
+- Nitrite test kits
+- Nitrate test kits
+- TDS meters
+- Digital pH meters
+
+### K. Water Care and Treatment
+
+Include:
+- Water conditioners
+- Dechlorinator
+- Beneficial bacteria
+- Bio starter
+- pH up and pH down
+- Ammonia remover
+- Algae control
+- Water clarifier
+- Aquarium salt
+- Mineral supplements
+- Shrimp minerals
+
+### L. Fish Food
+
+Include:
+- Flakes
+- Pellets
+- Micro pellets
+- Granules
+- Floating pellets
+- Sinking pellets
+- Bottom-feeder tablets
+- Betta food
+- Guppy food
+- Goldfish food
+- Koi food
+- Cichlid food
+- Flowerhorn food
+- Arowana food
+- Discus food
+- Tropical fish food
+- Marine fish food
+- Shrimp food
+- Fry food
+- Live food
+- Frozen food
+- Freeze-dried food
+- Bloodworms
+- Daphnia
+- Brine shrimp
+- Tubifex
+
+### M. Shrimp and Snails
+
+Include:
+- Cherry Shrimp
+- Blue Dream Shrimp
+- Amano Shrimp
+- Crystal Red Shrimp
+- Ghost Shrimp
+- Nerite Snails
+- Mystery Snails
+- Ramshorn Snails
+- Malaysian Trumpet Snails
+
+### N. Cleaning and Maintenance
+
+Include:
+- Aquarium cleaning kits
+- Gravel vacuum
+- Siphon
+- Water-change pump
+- Algae scraper
+- Magnetic glass cleaner
+- Aquarium brush
+- Filter brush
+- Pipe cleaner
+- Fish net
+- Breeding net
+- Water buckets
+- Water-change hoses
+- Plant scissors
+- Plant tweezers
+- Aquascaping tools
+
+### O. Aquarium Hardware and Accessories
+
+Include:
+- Aquarium pumps
+- Powerheads
+- Wave makers
+- Water pumps
+- UV sterilizers
+- CO2 systems
+- CO2 cylinders
+- CO2 regulators
+- CO2 diffusers
+- Bubble counters
+- Timers
+- Smart plugs
+- Extension boards
+- Suction cups
+- Airline connectors
+- Hose connectors
+- Valves
+- Pipe fittings
+
+### P. Birds
+
+Include:
+- Lovebirds
+- Budgies
+- Cockatiels
+- Finches
+- Canaries
+- Parakeets
+- Other ornamental birds
+- Bird cages
+- Bird food
+- Bird feeders
+- Water feeders
+- Perches
+- Bird toys
+- Nest boxes
+- Bird accessories
+
+Birds and any live animals restricted by the shop's fulfilment policy must clearly display STORE PICKUP ONLY. Do not offer home delivery for those products.
+
+### Q. Services
+
+Create a separate services catalog for:
+- Aquarium setup
+- Aquarium installation
+- Regular aquarium maintenance
+- Deep cleaning
+- Water change
+- Filter cleaning
+- Aquascaping
+- Custom aquarium design
+- Aquarium relocation
+- Fish tank consultation
+- Water testing
+- Fish health consultation
+- Office/shop aquarium maintenance
+- Home aquarium maintenance
+
+Services need individual detail pages, service descriptions, optional starting prices, enquiry forms, and WhatsApp booking.
+
+## 7. CATALOG DATA ARCHITECTURE
+
+Use reusable, normalized TypeScript models.
+
+Each category should include:
+- id
+- name
+- slug
+- parentId where applicable
+- description
+- image
+- displayOrder
+- active status
+
+Each product should support:
+- id
+- name
+- slug
+- sku
+- categoryId
+- subcategoryId
+- scientificName where applicable
+- variety or morph
+- shortDescription
+- fullDescription
+- images
+- price
+- compareAtPrice (optional)
+- currency
+- stockQuantity
+- availabilityStatus
+- productType
+- variants
+- tags
+- specifications
+- careRequirements where applicable
+- deliveryPolicy
+- featured status
+- active status
+- createdAt
+- updatedAt
+
+Support product types such as:
+- live-fish
+- live-plant
+- live-bird
+- aquarium
+- equipment
+- food
+- decoration
+- accessory
+- service
+
+For live fish, include relevant optional care fields:
+- adult size
+- recommended tank size
+- water temperature
+- pH range
+- temperament
+- diet
+- care difficulty
+- freshwater or marine
+- compatibility notes
+
+Do not invent scientific names, exact care requirements, stock counts, or prices when unknown. Mark missing data as unconfigured and let the administrator complete it.
+
+Do not create a separate React page for every fish variety. Generate category and product pages dynamically from the catalog data.
+
+## 8. PRODUCT CATALOG EXPERIENCE
+
+Build:
+- Main shop page
+- Category landing pages
+- Subcategory pages
+- Product listing pages
+- Individual product details
+- Featured collections
+- New arrivals
+- Related products
+- Recently viewed products
+- Search suggestions
+- Search results
+- Breadcrumb navigation
+
+Add filters for:
+- Category and subcategory
+- Product type
+- Price range
+- Availability
+- Fish variety
+- Freshwater or marine
+- Care difficulty when relevant
+- Tank size or other relevant specifications
+
+Add sorting:
+- Featured
+- Newest
+- Price low to high
+- Price high to low
+- Alphabetical
+
+Provide a mobile filter drawer and functional pagination or Load More.
+
+Use URL query parameters for shareable filters and search when practical.
+
+Search must work locally against the catalog without an external search API.
+
+## 9. PRODUCT DETAIL PAGE
+
+Each product page should include:
+- Product image gallery
+- Product name and category
+- Price and currency
+- Availability status
+- Variety or variant selector
+- Quantity selector
+- Add to Cart
+- Order Now on WhatsApp
+- Product description
+- Specifications
+- Care details for fish and plants when available
+- Pickup or delivery policy
+- Related products
+- Recently viewed products
+
+For live animals, show availability and care information prominently.
+
+For products with unknown prices, show “Contact for Price” and route to a WhatsApp enquiry rather than displaying a fabricated price.
+
+For unavailable products, disable immediate purchase, show the correct status, and provide an enquiry or restock-notification option if implemented.
+
+Do not claim that selecting a fish reserves it. Inventory must be confirmed by the shop.
+
+## 10. CART AND WHATSAPP ORDERING
+
+Implement a real client-side cart with:
+- Add to cart
+- Remove item
+- Increase or decrease quantity
+- Change product variant
+- Update quantity
+- Cart subtotal
+- Cart item count
+- Empty cart state
+- Persistent cart using localStorage
+- Validation against current catalog prices and availability
+
+The cart must use product IDs and variants as identifiers. Never trust a client-submitted price as the authoritative current price.
+
+Implement:
+1. Order Now for one product.
+2. Add to Cart for multiple products.
+3. Checkout / Send Order to WhatsApp.
+4. Service Enquiry on WhatsApp.
+5. Product Enquiry on WhatsApp.
+6. Store Pickup Only for birds.
+
+Create a centralized WhatsApp utility.
+
+Use this configuration:
+WHATSAPP_PHONE_NUMBER = read from an editable shop configuration.
+
+Do not invent a real shop phone number. If the number is missing, show an administrator setup notice and disable the actual outbound order action until configured.
+
+Format the number for the wa.me URL using the international country code and digits only. For an Indian number, use the configured number in 91XXXXXXXXXX format without a plus sign, spaces, brackets, or dashes.
+
+Generate the URL using:
+https://wa.me/PHONE_NUMBER?text=URL_ENCODED_MESSAGE
+
+Use encodeURIComponent to encode the complete message.
+
+The pre-filled message must include:
+- Customer name, if supplied
+- Order reference generated locally for reference
+- Product names
+- Selected variants
+- Quantities
+- Unit prices where configured
+- Line totals
+- Subtotal
+- Fulfilment preference
+- Customer delivery area or address only when relevant and voluntarily supplied
+- A request to confirm stock, delivery availability, and final charges
+
+Never claim an order is confirmed merely because WhatsApp opened.
+
+Clearly explain that the customer must press Send in WhatsApp.
+
+Keep the message concise enough to be readable, but include every item in a multi-product cart.
+
+Validate quantity limits, empty carts, missing shop phone numbers, and unavailable products before constructing the link.
+
+For birds:
+- Always display Store Pickup Only.
+- Never select home delivery as an available option.
+- Make the WhatsApp message explicitly request pickup confirmation.
+
+For services, generate a separate message with service name, preferred date/time, location, and optional customer notes.
+
+Do not integrate a paid WhatsApp Business API or automated message-sending service.
+
+## 11. CHECKOUT EXPERIENCE
+
+Build a lightweight checkout page or drawer.
+
+Allow:
+- Customer name
+- Contact number (optional unless the shop requires it)
+- Fulfilment preference
+- Delivery area or address when applicable
+- Optional notes
+
+Support:
+- Delivery enquiry
+- Store pickup
+- Service enquiry
+
+Do not ask for unnecessary personal information.
+
+Show a clear order summary before opening WhatsApp.
+
+Do not collect card details or simulate payment completion.
+
+Display a notice that final delivery charges, stock, and live-animal availability are confirmed by the shop over WhatsApp.
+
+Separate checkout from order confirmation. After opening WhatsApp, provide a clear explanation that the customer must send the message.
+
+## 12. ADMIN DASHBOARD
+
+Create a protected admin interface at /admin.
+
+Features:
+- Dashboard summary
+- Product listing
+- Add product
+- Edit product
+- Delete product with confirmation
+- Enable or disable product
+- Upload or configure product images
+- Edit prices
+- Edit inventory quantities
+- Manage variants
+- Manage categories and subcategories
+- Manage featured products
+- Manage services
+- Configure shop details
+- Configure WhatsApp number
+- Configure currency
+- Configure pickup and delivery policies
+- Import catalog from CSV
+- Export catalog to CSV
+- Validate imported data
+- Show missing fields and duplicate SKUs
+- Show stock warnings
+
+The dashboard must modify the same data source used by the public shop.
+
+For the initial local demo, use localStorage-backed persistence with clearly documented limitations.
+
+Do not pretend localStorage is a secure multi-user production database.
+
+For production:
+- Support a persistent database such as Supabase when configured.
+- Use server-side or provider-enforced authentication and authorization.
+- Enforce database permissions and row-level security where applicable.
+- Never place service-role keys in client-side code.
+- Do not allow unauthenticated public users to create, update, or delete inventory.
+- Include an honest setup guide for enabling production persistence.
+
+If no backend is configured, the public demo and local admin must still work, but clearly label the admin as local-demo mode.
+
+## 13. ADDITIONAL PAGES
+
+Create:
+- Home
+- Shop All
+- Freshwater Fish
+- Koi
+- Marine Fish
+- Birds
+- Aquariums and Tanks
+- Plants
+- Substrate
+- Decorations
+- Lighting
+- Filters
+- Water Care
+- Fish Food
+- Shrimp and Snails
+- Cleaning and Maintenance
+- Accessories
+- Services
+- Service Details
+- Product Details
+- Search Results
+- Cart
+- Checkout
+- About Us
+- Contact
+- FAQs
+- Shipping and Pickup Policy
+- Live Animal Care and Availability Policy
+- Privacy Policy
+- Terms and Conditions
+- 404 Not Found
+
+Policies should be editable templates for the shop owner to review, not fabricated legal guarantees.
+
+## 14. HOMEPAGE CONTENT STRUCTURE
+
+Build the homepage in this order:
+
+1. Announcement bar for new arrivals or store information.
+2. Sticky responsive navigation.
+3. Immersive 3D aquarium hero.
+4. Search bar with product suggestions.
+5. Shop by Category.
+6. Featured Freshwater Fish.
+7. Popular Betta and Guppy varieties.
+8. Koi collection.
+9. Aquariums and Tanks.
+10. Live Plants and Aquascaping.
+11. Equipment and Accessories.
+12. Fish Food and Water Care.
+13. Birds and Bird Accessories.
+14. Aquarium Setup and Maintenance Services.
+15. Why Shop With Us.
+16. Store Pickup and Availability information.
+17. Customer testimonials only when genuine content is provided.
+18. Store contact and opening hours when configured.
+19. Newsletter only if it works without a paid service and is properly configured.
+20. Footer with navigation, policies, contact, and WhatsApp.
+
+Every homepage section must have a clear purpose and working navigation.
+
+## 15. IMAGES AND MEDIA
+
+Use high-quality, relevant fish and aquarium imagery.
+
+Prioritize:
+- Locally stored images with documented usage rights.
+- Properly licensed free assets.
+- Owner-supplied product photography.
+- Remote image URLs configurable by the administrator.
+
+Never fabricate product images by using unrelated species or misleading photos.
+
+Do not make an external stock-image API mandatory.
+
+Provide image placeholders with meaningful labels and graceful fallbacks.
+
+Use responsive image sizing, lazy loading, width and height attributes, and appropriate alt text.
+
+Keep image assets organized and replaceable.
+
+## 16. ACCESSIBILITY AND PERFORMANCE
+
+Requirements:
+- Responsive layouts from small mobile screens to wide desktop.
+- Semantic HTML.
+- Keyboard navigation.
+- Visible focus states.
+- Accessible labels and dialog behavior.
+- Appropriate contrast.
+- Reduced-motion support.
+- Lazy loading.
+- Optimized image sizes.
+- Code splitting for large pages and 3D scenes.
+- Error boundaries around fragile interactive sections.
+- Loading, error, empty, and success states.
+- Avoid unnecessary dependencies and re-renders.
+- Avoid horizontal overflow.
+
+The shop must remain usable if WebGL is unavailable.
+
+## 17. SEO AND DISCOVERABILITY
+
+Implement:
+- Unique page titles and descriptions
+- Canonical URLs where appropriate
+- Open Graph metadata
+- Semantic headings
+- Breadcrumbs
+- Sitemap generation
+- robots.txt
+- Product structured data only when product information is accurate and available
+- Human-readable slugs
+- Search-engine-friendly product URLs
+
+Do not publish fabricated ratings, reviews, availability, or pricing in structured data.
+
+## 18. SECURITY AND RELIABILITY
+
+- Validate all forms.
+- Validate and sanitize imported data.
+- Do not put secret credentials in frontend environment variables.
+- Do not expose private API keys.
+- Protect production admin routes and backend mutations.
+- Prevent unauthorized inventory changes.
+- Handle missing or malformed product data safely.
+- Handle WhatsApp URL construction and long messages safely.
+- Never store payment card information.
+- Do not falsely report an order as placed or confirmed.
+- Include an .env.example only for variables genuinely required by the selected architecture.
+
+## 19. PROJECT STRUCTURE
+
+Use a clean modular structure similar to:
+
+src/
+  app/
+  components/
+    layout/
+    navigation/
+    products/
+    cart/
+    checkout/
+    whatsapp/
+    aquarium-3d/
+    forms/
+    admin/
+  pages/
+  features/
+    catalog/
+    cart/
+    orders/
+    services/
+    admin/
+  data/
+    categories.ts
+    products.ts
+    services.ts
+  hooks/
+  lib/
+    whatsapp.ts
+    currency.ts
+    validation.ts
+    storage.ts
+  types/
+  styles/
+  tests/
+
+public/
+  images/
+  models/
+
+Include:
+- package.json
+- README.md
+- .env.example if needed
+- catalog-requirements.md
+- sample product data
+- database schema and setup instructions if a backend is configured
+
+Adapt the structure where necessary but preserve clear separation of UI, catalog logic, persistence, and WhatsApp URL generation.
+
+## 20. IMPLEMENTATION WORKFLOW
+
+Work in stages while producing a complete project.
+
+Stage 1: Inspect the workspace and the supplied catalog. Establish the design system, application structure, types, category hierarchy, and seed data.
+
+Stage 2: Build the homepage, navigation, responsive layouts, 3D hero, and category pages.
+
+Stage 3: Implement catalog search, filters, sorting, product details, variants, and availability.
+
+Stage 4: Implement the persistent cart, checkout, WhatsApp links, message generation, and pickup-only bird policy.
+
+Stage 5: Implement the admin dashboard, local persistence, CSV import/export, and optional database integration.
+
+Stage 6: Build service pages, policy pages, SEO metadata, accessibility improvements, and responsive polish.
+
+Stage 7: Run the application, inspect it in the browser, run available tests, check console errors, fix broken imports, fix TypeScript errors, and resolve build failures.
+
+Do not stop after generating a homepage or a static visual mockup.
+
+Do not stop at a plan or architecture description. Implement the files and features in the available workspace.
+
+If a feature depends on credentials that have not been supplied, implement its configuration interface and a working demo-safe fallback rather than inventing credentials.
+
+If the entire catalog cannot be imported in one pass, create the taxonomy first, report what is still missing, and continue importing categories and variants until the supplied taxonomy is covered.
+
+## 21. ACCEPTANCE TESTS
+
+Before calling the project complete, verify:
+
+1. The app starts using documented commands.
+2. The homepage renders on desktop and mobile.
+3. The 3D hero has a working fallback.
+4. Every supplied category and variety is represented in the catalog data or explicitly reported as missing.
+5. Category navigation and breadcrumbs work.
+6. Search finds products by name and variety.
+7. Filters and sorting work together.
+8. Product variants and quantities work.
+9. Add to Cart and Remove from Cart work.
+10. Cart contents persist after a refresh in local-demo mode.
+11. Product prices and totals are calculated correctly.
+12. Order Now creates a product-specific WhatsApp link.
+13. A multi-product cart creates a complete pre-filled WhatsApp order message.
+14. URL encoding works with spaces, punctuation, and Indian currency formatting.
+15. A missing WhatsApp number produces a clear configuration message.
+16. Birds cannot be checked out for home delivery.
+17. Unavailable products cannot be purchased as if they were in stock.
+18. Service enquiries open WhatsApp with the correct service details.
+19. Admin changes update the same catalog displayed by the shop.
+20. CSV import and export work and handle invalid rows safely.
+21. Production admin security is not falsely represented by a local-only demo.
+22. No buttons are inert and no essential feature requires a paid API.
+23. The project builds successfully without TypeScript or import errors.
+24. The README explains setup, configuration, local development, testing, deployment, and production persistence.
+
+## 22. FINAL DELIVERABLE
+
+Produce a complete working aquarium e-commerce application, not just a design concept.
+
+Prioritize, in order:
+1. Reliable shopping and WhatsApp ordering.
+2. Complete taxonomy and dynamic catalog.
+3. Responsive premium UI.
+4. Admin catalog management.
+5. Immersive 3D experience.
+6. Security, accessibility, and performance.
+
+Use sensible defaults without asking unnecessary questions. Keep the shop name configurable, and leave the actual WhatsApp number, real prices, product images, inventory, contact details, and policies editable by the client.
+
+Begin by inspecting the workspace and available catalog files, then implement the project and verify it runs.

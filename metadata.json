@@ -1,0 +1,7 @@
+{
+  "name": "Modern Aquarium",
+  "description": "Premium aquarium showroom & e-commerce offering freshwater fish, koi, marine fish, tanks, aquascaping, birds, accessories, and professional maintenance with seamless WhatsApp ordering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
